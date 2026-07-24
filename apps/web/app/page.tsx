@@ -1,5 +1,12 @@
 import Image, { type ImageProps } from "next/image";
-import { Button } from "@greenline/ui/button";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@greenline/ui/components/card";
+import { AlertButton } from "./alert-button";
 import styles from "./page.module.css";
 
 type Props = Omit<ImageProps, "src"> & {
@@ -63,9 +70,19 @@ export default function Home() {
             Read our docs
           </a>
         </div>
-        <Button appName="web" className={styles.secondary}>
-          Open alert
-        </Button>
+        <AlertButton>Open alert</AlertButton>
+        <Card className="max-w-sm">
+          <CardHeader>
+            <CardTitle>Shared UI package</CardTitle>
+            <CardDescription>
+              Button and Card are shadcn/ui primitives from{" "}
+              <code>@greenline/ui</code>.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>Add more components with `npx shadcn add &lt;component&gt;`.</p>
+          </CardContent>
+        </Card>
       </main>
       <footer className={styles.footer}>
         <a
