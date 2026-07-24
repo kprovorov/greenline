@@ -13,6 +13,16 @@ export interface CookiesAdapter {
   set(name: string, value: string, options: CookieOptions): void;
 }
 
+export interface ServerSupabaseClientOptions {
+  /**
+   * Returns the JWT to send as the request's bearer token, e.g. Clerk's
+   * `(await auth()).getToken()`. Used instead of Supabase's own session
+   * cookies — see the "Third-Party Auth" section in
+   * packages/supabase/README.md.
+   */
+  accessToken?: () => Promise<string | null>;
+}
+
 /**
  * Creates a Supabase client for use in Server Components, Route Handlers,
  * and Server Actions.
@@ -23,6 +33,7 @@ export interface CookiesAdapter {
  */
 export function createServerSupabaseClient(
   cookieStore: CookiesAdapter,
+  options: ServerSupabaseClientOptions = {},
 ): SupabaseClient<Database> {
   const { url, anonKey } = getSupabaseEnv();
 
@@ -41,5 +52,6 @@ export function createServerSupabaseClient(
         }
       },
     },
+    accessToken: options.accessToken,
   });
 }
